@@ -1,3 +1,8 @@
+variable "source_code_hash" {
+  description = "Lambda source code hash"
+  default     = null
+}
+
 variable "function_name" {
   description = "Lambda function name."
 }

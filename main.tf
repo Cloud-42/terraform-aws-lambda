@@ -11,7 +11,8 @@ resource "aws_lambda_function" "function" {
   timeout                        = var.timeout
   memory_size                    = var.memory_size
   reserved_concurrent_executions = var.reserved_concurrent_executions
-
+  source_code_hash               = var.source_code_hash 
+  
   vpc_config {
     subnet_ids         = var.subnet_ids
     security_group_ids = var.security_group_ids
