@@ -85,6 +85,7 @@ variable "reserved_concurrent_executions" {
 }
 
 variable "environment_vars" {
+  description = "Map of environment variables"
   type    = map(string)
   default = null
 }
