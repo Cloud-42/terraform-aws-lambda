@@ -90,3 +90,8 @@ variable "environment_vars" {
   default     = null
 }
 
+variable "tags" {
+  description = "Tags to assign to the Function"
+  type        = map(string)
+  default     = {}
+}
