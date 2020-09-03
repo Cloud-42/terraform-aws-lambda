@@ -86,7 +86,12 @@ variable "reserved_concurrent_executions" {
 
 variable "environment_vars" {
   description = "Map of environment variables"
-  type    = map(string)
-  default = null
+  type        = map(string)
+  default     = null
 }
 
+variable "tags" {
+  description = "Tags to assign to the Function"
+  type        = map(string)
+  default     = {}
+}
