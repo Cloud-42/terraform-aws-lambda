@@ -34,6 +34,10 @@ resource "aws_lambda_function" "function" {
   }
 
   tags = var.tags
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_cloudwatch_log_group" "loggroup" {
