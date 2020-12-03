@@ -2,16 +2,16 @@
 # Lambda function	
 # ------------------------------------------------
 resource "aws_lambda_function" "function" {
-  s3_bucket                      = var.s3_bucket
-  s3_key                         = var.s3_key
-  function_name                  = var.function_name
-  role                           = aws_iam_role.iam.arn
-  handler                        = var.handler
-  runtime                        = var.runtime
-  timeout                        = var.timeout
-  memory_size                    = var.memory_size
-  reserved_concurrent_executions = var.reserved_concurrent_executions
-  source_code_hash               = var.source_code_hash
+  #s3_bucket                      = 
+  #s3_key                         = var.function.s3_key
+  function_name                  = locals.function.name
+  role                           = locals.function.role
+  handler                        = locals.function.handler
+  runtime                        = locals.function.runtime
+  timeout                        = locals.function.timeout
+  memory_size                    = locals.function.memory_size
+  reserved_concurrent_executions = locals.function.reserved_concurrent_executions
+  source_code_hash               = locals.function.source_code_hash
 
   vpc_config {
     subnet_ids         = var.subnet_ids

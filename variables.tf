@@ -1,37 +1,44 @@
-variable "source_code_hash" {
-  description = "Lambda source code hash"
-  default     = null
+variable "locals_function" {
+  type = object({
+    name                           = string
+    role                           = string
+    handler                        = string
+    runtime                        = string
+    timeout                        = number
+    memory_size                    = number
+    reserved_concurrent_executions = number
+    source_code_hash               = string
+    publish                        = bool
+  })
+
+  default = {
+    name                           = null 
+    role                           = null
+    handler                        = null
+    runtime                        = "java11"
+    reserved_concurrent_executions = -1
+    source_code_hash               = null
+    publish                        = true
+    timeout                        = 60
+    memory_size                    = 1536
+  }
 }
 
-variable "function_name" {
-  description = "Lambda function name."
+variable "function" {
+  default = null
 }
 
-variable "s3_bucket" {
-  description = "s3 bucket containing the Lambda package.** Bucket MUST be in the same region as the Lambda. "
-}
-
-variable "s3_key" {
-  description = "s3 key for your Lambda package."
-}
-
-variable "handler" {
-  description = "The function within your code that Lambda calls to begin execution."
-}
-
-variable "runtime" {
-  description = "Runtime environment for the Lambda function."
-  default     = "java8"
-}
 
 variable "subnet_ids" {
   type        = list(string)
   description = "The VPC subnets in which the Lambda runs."
+  default     = null
 }
 
 variable "security_group_ids" {
   type        = list(string)
   description = "The VPC security groups assigned to the Lambda."
+  default     = null
 }
 
 variable "lambda_policy" {
@@ -63,25 +70,11 @@ ROLE
 
 }
 
-variable "timeout" {
-  description = "The maximum time in seconds that the Lambda can run for."
-  default     = 60
-}
-
-variable "memory_size" {
-  description = "Amount of memory in MB your Lambda Function can use at runtime."
-  default     = 320
-}
 
 variable "lambda_env" {
   description = "Environment parameters passed to the Lambda function."
   type        = map(string)
   default     = {}
-}
-
-variable "reserved_concurrent_executions" {
-  description = "Reserved concurrent executions for this Lambda"
-  default     = -1
 }
 
 variable "environment_vars" {
