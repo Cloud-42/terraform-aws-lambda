@@ -28,6 +28,9 @@ variable "function" {
   default = null
 }
 
+variable "create_default_log_group" { 
+  default = 0
+}
 
 variable "subnet_ids" {
   type        = list(string)

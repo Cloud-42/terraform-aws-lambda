@@ -29,7 +29,8 @@ resource "aws_lambda_function" "function" {
 }
 
 resource "aws_cloudwatch_log_group" "loggroup" {
-  name              = "/aws/lambda/${var.function_name}"
+  count             = var.create_default_log_group
+  name              = "/aws/lambda/${local.function.name}"
   retention_in_days = 7
   depends_on        = [aws_lambda_function.function]
 }
