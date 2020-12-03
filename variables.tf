@@ -10,6 +10,7 @@ variable "locals_function" {
     reserved_concurrent_executions = number
     source_code_hash               = string
     publish                        = bool
+    package_type                   = string 
   })
 
   default = {
@@ -23,6 +24,7 @@ variable "locals_function" {
     publish                        = true
     timeout                        = 60
     memory_size                    = 1536
+    package_type                   = "Zip"
   }
 }
 
