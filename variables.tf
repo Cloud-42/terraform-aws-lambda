@@ -12,7 +12,7 @@ variable "locals_function" {
   })
 
   default = {
-    name                           = null 
+    name                           = null
     role                           = null
     handler                        = null
     runtime                        = "java11"
@@ -24,11 +24,30 @@ variable "locals_function" {
   }
 }
 
+variable "locals_s3" {
+  type = object({
+    bucket         = string
+    key            = string
+    object_version = string
+  })
+
+  default = {
+    bucket         = null
+    key            = null
+    object_version = null
+  }
+}
+
 variable "function" {
   default = null
 }
 
-variable "create_default_log_group" { 
+variable "s3" {
+  default = null
+}
+
+
+variable "create_default_log_group" {
   default = 0
 }
 
