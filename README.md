@@ -42,15 +42,17 @@ To import the module add the following to your TF file:
 ```
 module "lambda" {
   source  = "Cloud-42/lambda/aws"
-  version = "1.1.0"  # Or required version
+  version = "3.0.0"  # Or required version
+  function = ({
+    name    = var.function_name
+    role    = var.function_role
+    handler = var.handler
+  })
 
-  function_name      = "${var.function_name}"
-  handler            = var.handler
-  security_group_ids = [var.security_group_ids]
-  s3_bucket          = var.s3_deployment_bucket
-  s3_key             = var.s3_deployment_artifact
-  source_code_hash   = var.function_source_code_hash
-  subnet_ids         = "${var.subnet_ids}"
+  s3 = ({
+    bucket = "my-s3-source-bucket"
+    key    = "file.jar.zip"
+  })
 
   environment_vars = {
     ENV_VAR = "${var.ENV_VAR}"
