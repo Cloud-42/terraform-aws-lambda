@@ -35,13 +35,13 @@ variable "create_default_log_group" {
 variable "subnet_ids" {
   type        = list(string)
   description = "The VPC subnets in which the Lambda runs."
-  default     = null
+  default     = ""
 }
 
 variable "security_group_ids" {
   type        = list(string)
   description = "The VPC security groups assigned to the Lambda."
-  default     = null
+  default     = ""
 }
 
 variable "lambda_policy" {
