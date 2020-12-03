@@ -1,5 +1,6 @@
 variable "locals_function" {
   type = object({
+    filename                       = string 
     name                           = string
     role                           = string
     handler                        = string
@@ -12,6 +13,7 @@ variable "locals_function" {
   })
 
   default = {
+    filename                       = null
     name                           = null
     role                           = null
     handler                        = null

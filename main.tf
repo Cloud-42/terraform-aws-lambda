@@ -5,6 +5,7 @@ resource "aws_lambda_function" "function" {
   s3_bucket                      = local.s3.bucket != null ? local.s3.bucket : null
   s3_key                         = local.s3.key != null ? local.s3.key : null
   s3_object_version              = local.s3.object_version != null ? local.s3.object_version : null
+  filename                       = local.function.filename != null ? local.function.filename : null
   function_name                  = local.function.name
   role                           = local.function.role
   handler                        = local.function.handler
