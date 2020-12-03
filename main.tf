@@ -13,6 +13,7 @@ resource "aws_lambda_function" "function" {
   memory_size                    = local.function.memory_size
   reserved_concurrent_executions = local.function.reserved_concurrent_executions
   source_code_hash               = local.function.source_code_hash
+  publish                        = local.function.publish
 
   vpc_config {
     subnet_ids         = var.subnet_ids
