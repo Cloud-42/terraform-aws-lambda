@@ -28,8 +28,8 @@ resource "aws_lambda_function" "function" {
     }
   }
 
-  tracing_config { 
-    mode = "Active"
+  tracing_config {
+    mode = var.tracing_config
   }
 
   tags = var.tags
@@ -41,4 +41,3 @@ resource "aws_cloudwatch_log_group" "loggroup" {
   retention_in_days = 7
   depends_on        = [aws_lambda_function.function]
 }
-

@@ -1,6 +1,6 @@
 variable "locals_function" {
   type = object({
-    filename                       = string 
+    filename                       = string
     name                           = string
     role                           = string
     handler                        = string
@@ -65,40 +65,9 @@ variable "security_group_ids" {
   default     = []
 }
 
-variable "lambda_policy" {
-  description = "The Lambda IAM Role Policy."
-  default     = <<ROLE
-{
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "logs:CreateLogGroup",
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
-      ],
-      "Resource": "arn:aws:logs:*:*:*"
-    },
-    {
-      "Effect": "Allow",
-         "Action": [
-          "ssm:GetParameters",
-          "ssm:GetParameter",
-          "ssm:GetParametersByPath"
-       ],
-       "Resource": "*"
-    }
-  ]
-}
-ROLE
-
-}
-
-
-variable "lambda_env" {
-  description = "Environment parameters passed to the Lambda function."
-  type        = map(string)
-  default     = {}
+variable "tracing_config" {
+  description = "Tracing config. Can be either PassThrough or Active"
+  default     = "Active"
 }
 
 variable "environment_vars" {

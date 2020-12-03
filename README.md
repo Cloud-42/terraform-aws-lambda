@@ -38,7 +38,6 @@ Upon launching the following resources will be created:
 | `security_group_ids` | Security groups to assign to the Lambda |
 | `source_code_hash` | Source code hash ( Default = Null ) |
 | `subnet_ids` | The subnets in which the Lambda runs  |
-| `lambda_env` | Environment parameters passed to the Lambda function|
 | `memory_size` | Memory allocation  |
 | `reserved_concurrent_executions` | Reserved concurrent executions ( Default = unreserved )  |
 | `runtime` | Runtime environment  |
