@@ -4,14 +4,14 @@
 resource "aws_lambda_function" "function" {
   #s3_bucket                      = 
   #s3_key                         = var.function.s3_key
-  function_name                  = locals.function.name
-  role                           = locals.function.role
-  handler                        = locals.function.handler
-  runtime                        = locals.function.runtime
-  timeout                        = locals.function.timeout
-  memory_size                    = locals.function.memory_size
-  reserved_concurrent_executions = locals.function.reserved_concurrent_executions
-  source_code_hash               = locals.function.source_code_hash
+  function_name                  = local.function.name
+  role                           = local.function.role
+  handler                        = local.function.handler
+  runtime                        = local.function.runtime
+  timeout                        = local.function.timeout
+  memory_size                    = local.function.memory_size
+  reserved_concurrent_executions = local.function.reserved_concurrent_executions
+  source_code_hash               = local.function.source_code_hash
 
   vpc_config {
     subnet_ids         = var.subnet_ids
