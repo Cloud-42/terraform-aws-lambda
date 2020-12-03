@@ -10,7 +10,7 @@ variable "locals_function" {
     reserved_concurrent_executions = number
     source_code_hash               = string
     publish                        = bool
-    package_type                   = string 
+    package_type                   = string
   })
 
   default = {
@@ -23,7 +23,7 @@ variable "locals_function" {
     source_code_hash               = null
     publish                        = true
     timeout                        = 60
-    memory_size                    = 1536
+    memory_size                    = 128
     package_type                   = "Zip"
   }
 }
@@ -43,27 +43,29 @@ variable "locals_s3" {
 }
 
 variable "function" {
-  default = null
+  description = "Lambda function variables - merged will locals to create configuration"
+  default     = null
 }
 
 variable "s3" {
-  default = null
+  description = "OPTIONAL: s3 object to specify function location in s3 - merged with locals to create configuration"
+  default     = null
 }
 
-
 variable "create_default_log_group" {
-  default = 0
+  description = "OPTIONAL: Whether to create default log group. Set to 1 to create"
+  default     = 0
 }
 
 variable "subnet_ids" {
   type        = list(string)
-  description = "The VPC subnets in which the Lambda runs."
+  description = "OPTIONAL: The VPC subnets in which the Lambda runs."
   default     = []
 }
 
 variable "security_group_ids" {
   type        = list(string)
-  description = "The VPC security groups assigned to the Lambda."
+  description = "OPTIONAL: The VPC security groups to assign to the Lambda."
   default     = []
 }
 
