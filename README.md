@@ -12,37 +12,26 @@
 
 Upon launching the following resources will be created:
 
- * CW Logs log group
- * IAM Role
- * IAM Policies, see below:
- * Lambda function 
+ * Lambda function
+ * Default CW log group: OPTIONAL 
 
 ## Dependencies and Prerequisites
- * Terraform v0.12. or higher
+ * Terraform v0.13.2 or higher
  * AWS account
 
-## IAM Role and attachments
- * AWS Service policy - AWSLambdaVPCAccessExecutionRole   - Attached to role if subnets= is specified
- * AWS Service policy - AWSLambdaSQSQueueExecutionRole    - Always attached
- * AWS Service policy - AWSLambdaBasicExecutionRole       - Always attached
- * var.lambda_policy - Can be used to add a custom policy - Default policy grants CWLogs access and Parameter Store access 
-
 ## Variables
-| Variable | Meaning |
-| :------- | :----- |
-| `environment_vars` | Map of environment variables to be created |
-| `function_name` | Function name |
-| `handler` | Lambda handler |
-| `s3_bucket` | s3 bucket where the function code can be found  |
-| `s3_key` | s3 key / file name of the function code |
-| `security_group_ids` | Security groups to assign to the Lambda |
-| `source_code_hash` | Source code hash ( Default = Null ) |
-| `subnet_ids` | The subnets in which the Lambda runs  |
-| `lambda_env` | Environment parameters passed to the Lambda function|
-| `memory_size` | Memory allocation  |
-| `reserved_concurrent_executions` | Reserved concurrent executions ( Default = unreserved )  |
-| `runtime` | Runtime environment  |
-| `timeout` | Maximum timeout in seconds  |
+| Variable | Meaning | Optional |
+| :------- | :----- | :----- |
+| `environment_vars` | Map of environment variables to be created | Yes |
+| `function` | Object variable for Lambda config | No |
+| `s3` | Object variable for s3 config | Yes 
+| `locals_function` | Local object variable for Lambda config - merged with var.function | N/A |
+| `locals_s3` | Local object variable for s3 source config - merged with var.s3  |  N/A |
+| `create_default_log_group` | Whether to create default log group. Set to 1 to create | Yes |
+| `subnet_ids` | List of subnet ids | Yes |
+| `security_group_ids` | List of security group ids | Yes |
+| `tracing_config` | Tracing config. Can be either PassThrough or Active  | Yes |
+| `tags` | Map of tags to apply | Yes |
 
 ## Outputs
  * lambda\_function 
@@ -53,15 +42,17 @@ To import the module add the following to your TF file:
 ```
 module "lambda" {
   source  = "Cloud-42/lambda/aws"
-  version = "1.1.0"  # Or required version
+  version = "3.0.0"  # Or required version
+  function = ({
+    name    = var.function_name
+    role    = var.function_role
+    handler = var.handler
+  })
 
-  function_name      = "${var.function_name}"
-  handler            = var.handler
-  security_group_ids = [var.security_group_ids]
-  s3_bucket          = var.s3_deployment_bucket
-  s3_key             = var.s3_deployment_artifact
-  source_code_hash   = var.function_source_code_hash
-  subnet_ids         = "${var.subnet_ids}"
+  s3 = ({
+    bucket = "my-s3-source-bucket"
+    key    = "file.jar.zip"
+  })
 
   environment_vars = {
     ENV_VAR = "${var.ENV_VAR}"

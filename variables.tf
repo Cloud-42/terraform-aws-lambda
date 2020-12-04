@@ -1,87 +1,77 @@
-variable "source_code_hash" {
-  description = "Lambda source code hash"
+variable "locals_function" {
+  type = object({
+    filename                       = string
+    name                           = string
+    role                           = string
+    handler                        = string
+    runtime                        = string
+    timeout                        = number
+    memory_size                    = number
+    reserved_concurrent_executions = number
+    source_code_hash               = string
+    publish                        = bool
+    package_type                   = string
+  })
+
+  default = {
+    filename                       = null
+    name                           = null
+    role                           = null
+    handler                        = null
+    runtime                        = "java11"
+    reserved_concurrent_executions = -1
+    source_code_hash               = null
+    publish                        = true
+    timeout                        = 60
+    memory_size                    = 128
+    package_type                   = "Zip"
+  }
+}
+
+variable "locals_s3" {
+  type = object({
+    bucket         = string
+    key            = string
+    object_version = string
+  })
+
+  default = {
+    bucket         = null
+    key            = null
+    object_version = null
+  }
+}
+
+variable "function" {
+  description = "Lambda function variables - merged will locals to create configuration"
   default     = null
 }
 
-variable "function_name" {
-  description = "Lambda function name."
+variable "s3" {
+  description = "OPTIONAL: s3 object to specify function location in s3 - merged with locals to create configuration"
+  default     = null
 }
 
-variable "s3_bucket" {
-  description = "s3 bucket containing the Lambda package.** Bucket MUST be in the same region as the Lambda. "
-}
-
-variable "s3_key" {
-  description = "s3 key for your Lambda package."
-}
-
-variable "handler" {
-  description = "The function within your code that Lambda calls to begin execution."
-}
-
-variable "runtime" {
-  description = "Runtime environment for the Lambda function."
-  default     = "java8"
+variable "create_default_log_group" {
+  description = "OPTIONAL: Whether to create default log group. Set to 1 to create"
+  default     = 0
 }
 
 variable "subnet_ids" {
   type        = list(string)
-  description = "The VPC subnets in which the Lambda runs."
+  description = "OPTIONAL: The VPC subnets in which the Lambda runs."
+  default     = []
 }
 
 variable "security_group_ids" {
   type        = list(string)
-  description = "The VPC security groups assigned to the Lambda."
+  description = "OPTIONAL: The VPC security groups to assign to the Lambda."
+  default     = []
 }
 
-variable "lambda_policy" {
-  description = "The Lambda IAM Role Policy."
-  default     = <<ROLE
-{
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "logs:CreateLogGroup",
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
-      ],
-      "Resource": "arn:aws:logs:*:*:*"
-    },
-    {
-      "Effect": "Allow",
-         "Action": [
-          "ssm:GetParameters",
-          "ssm:GetParameter",
-          "ssm:GetParametersByPath"
-       ],
-       "Resource": "*"
-    }
-  ]
-}
-ROLE
-
-}
-
-variable "timeout" {
-  description = "The maximum time in seconds that the Lambda can run for."
-  default     = 60
-}
-
-variable "memory_size" {
-  description = "Amount of memory in MB your Lambda Function can use at runtime."
-  default     = 320
-}
-
-variable "lambda_env" {
-  description = "Environment parameters passed to the Lambda function."
-  type        = map(string)
-  default     = {}
-}
-
-variable "reserved_concurrent_executions" {
-  description = "Reserved concurrent executions for this Lambda"
-  default     = -1
+variable "tracing_config" {
+  description = "Tracing config. Can be either PassThrough or Active"
+  default     = "Active"
 }
 
 variable "environment_vars" {
