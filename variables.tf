@@ -1,3 +1,4 @@
+variable "region" { default = "eu-west-1" }
 variable "locals_function" {
   type = object({
     filename                       = string
@@ -44,17 +45,20 @@ variable "locals_s3" {
 
 variable "function" {
   description = "Lambda function variables - merged will locals to create configuration"
+  type        = map(any)
   default     = null
 }
 
 variable "s3" {
   description = "OPTIONAL: s3 object to specify function location in s3 - merged with locals to create configuration"
+  type        = map(any)
   default     = null
 }
 
 variable "create_default_log_group" {
   description = "OPTIONAL: Whether to create default log group. Set to 1 to create"
-  default     = 0
+  type        = number
+  default     = 1
 }
 
 variable "subnet_ids" {
@@ -84,4 +88,16 @@ variable "tags" {
   description = "Tags to assign to the Function"
   type        = map(string)
   default     = {}
+}
+
+variable "ephemeral_storage" {
+  description = "The amount of Ephemeral storage(/tmp) to allocate for the Lambda Function in MB."
+  type        = number
+  default     = "512"
+}
+
+variable "retention_in_days" {
+  description = "Log retention in dayes"
+  type        = number
+  default     = 7
 }
