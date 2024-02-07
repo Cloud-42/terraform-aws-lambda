@@ -66,12 +66,18 @@ To import the module add the following to your TF file:
 ```
 module "lambda" {
   source  = "Cloud-42/lambda/aws"
-  version = "3.0.0"  # Or required version
+  version = "3.1.0"  # Or required version
   function = ({
-    name    = var.function_name
-    role    = var.function_role
-    handler = var.handler
+    name        = var.function_name
+    role        = var.function_role
+    handler     = var.handler
+    filename    = "./lambda.zip"
+    runtime     = "python3.9"
+    memory_size = "512"
+    timeout     = "600"
   })
+
+  ephemeral_storage = "10240"
 
   s3 = ({
     bucket = "my-s3-source-bucket"
