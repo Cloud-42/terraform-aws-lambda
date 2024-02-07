@@ -29,6 +29,10 @@ resource "aws_lambda_function" "function" {
     }
   }
 
+  ephemeral_storage {
+    size = var.ephemeral_storage
+  }
+
   tracing_config {
     mode = var.tracing_config
   }
@@ -43,6 +47,6 @@ resource "aws_lambda_function" "function" {
 resource "aws_cloudwatch_log_group" "loggroup" {
   count             = var.create_default_log_group
   name              = "/aws/lambda/${local.function.name}"
-  retention_in_days = 7
+  retention_in_days = var.retention_in_days
   depends_on        = [aws_lambda_function.function]
 }
